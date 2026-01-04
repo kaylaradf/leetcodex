@@ -1,0 +1,22 @@
+# Byte-code files
+*.pyc
+__pycache__/
+
+# Virtual environment
+.venv/
+env/
+venv/
+
+# IDE-specific files
+.idea/
+.vscode/
+
+# Operating System files
+.DS_Store
+Thumbs.db
+
+# Gemini specific ignores
+.geminiignore
+
+# Test output
+/target/
