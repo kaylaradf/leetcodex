@@ -13,7 +13,7 @@ def title_case_from_slug(slug):
     return ' '.join(word.capitalize() for word in slug.split('-'))
 
 def parse_solution_file(filename):
-    """Parses metadata from a solution file."""
+    """Parses metadata from a solution file (comments or docstring)."""
     match = re.match(r'(\d+)\.(.+)\.py', filename)
     if not match:
         return None
@@ -28,21 +28,31 @@ def parse_solution_file(filename):
         'filename': filename
     }
 
-    with open(os.path.join('solutions', filename), 'r', encoding='utf-8') as f:
-        for line in f:
-            line_stripped = line.strip()
-            if not line_stripped:
-                continue # Skip empty lines
+    file_path = os.path.join('solutions', filename)
+    with open(file_path, 'r', encoding='utf-8') as f:
+        content = f.read()
 
-            if line.startswith('# Difficulty:'):
-                metadata['difficulty'] = line.split(':', 1)[1].strip()
-            elif line.startswith('# Category:'):
-                metadata['category'] = line.split(':', 1)[1].strip()
-            elif line.startswith('#'):
-                continue # Skip other comments
-            else:
-                # Stop parsing when we hit non-comment, non-empty code
-                break
+    # 1. Try parsing from Docstring (''' ... ''' or """ ... """)
+    docstring_match = re.search(r'^[\s]*[\'"]{3}([\s\S]*?)[\'"]{3}', content)
+    if docstring_match:
+        doc_content = docstring_match.group(1)
+        for line in doc_content.split('\n'):
+            if 'Difficulty:' in line:
+                metadata['difficulty'] = line.split('Difficulty:', 1)[1].strip()
+            elif 'Category:' in line:
+                metadata['category'] = line.split('Category:', 1)[1].strip()
+
+    # 2. Fallback: Try parsing from top-level comments (if not found in docstring)
+    if metadata['difficulty'] == 'N/A' or metadata['category'] == 'N/A':
+        with open(file_path, 'r', encoding='utf-8') as f:
+            for line in f:
+                if line.strip().startswith('# Difficulty:') and metadata['difficulty'] == 'N/A':
+                    metadata['difficulty'] = line.split(':', 1)[1].strip()
+                elif line.strip().startswith('# Category:') and metadata['category'] == 'N/A':
+                    metadata['category'] = line.split(':', 1)[1].strip()
+                elif not line.strip().startswith('#') and line.strip():
+                    break
+
     return metadata
 
 def generate_problem_index(solutions_metadata):
