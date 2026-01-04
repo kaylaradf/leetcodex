@@ -11,12 +11,11 @@ karena sdg liburan dan gabut serta habis viral lalu dihujat (ngapain coba.) maka
 ## Repository Structure
 
 ```text
-.
-├── README.md
-    ├── scripts/
-        ├── update_readme.py
-    ├── solutions/
-        ├── 1.two-sum.py
+letkod/
+├── solutions/        # Python solutions (source of truth)
+├── scripts/          # Automation scripts
+├── .gitignore
+└── README.md
 ```
 
 ## Project Structure

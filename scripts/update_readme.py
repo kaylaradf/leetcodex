@@ -53,34 +53,40 @@ def generate_problem_index(solutions_metadata):
     
     return header + table_header + "\n".join(table_rows)
 
-def generate_tree_diagram(root_dir='.'):
-    """Generates a directory tree diagram."""
-    exclude_dirs = {'.git', '__pycache__', '.idea', '.vscode', 'leetcode-rs-clone', 'venv', 'env'}
-    exclude_files = {'.DS_Store', 'Thumbs.db', '.geminiignore', '.gitignore'}
+def generate_tree_diagram():
+    """Generates a directory tree diagram with annotations, similar to leetcode-rs."""
+    # Define the items we want to display and their descriptions
+    # format: (name, description, is_directory)
+    items = [
+        ('solutions', 'Python solutions (source of truth)', True),
+        ('scripts',   'Automation scripts', True),
+        ('.gitignore', None, False),
+        ('README.md',  None, False)
+    ]
     
-    tree_str = ".\n"
+    tree_lines = ["letkod/"]
     
-    for root, dirs, files in os.walk(root_dir):
-        # Filter directories in-place
-        dirs[:] = [d for d in dirs if d not in exclude_dirs]
-        dirs.sort()
-        files = sorted([f for f in files if f not in exclude_files])
-        
-        level = root.replace(root_dir, '').count(os.sep)
-        indent = '    ' * (level)
-        
-        # Don't show root dot again
-        if root == root_dir:
-            pass
-        else:
-            basename = os.path.basename(root)
-            tree_str += f"{indent}├── {basename}/\n"
-            indent += '    '
+    # Filter items that actually exist
+    existing_items = []
+    for name, desc, is_dir in items:
+        if os.path.exists(name):
+            display_name = f"{name}/" if is_dir else name
+            existing_items.append((display_name, desc))
             
-        for i, f in enumerate(files):
-            tree_str += f"{indent}├── {f}\n"
+    # Build the tree string
+    count = len(existing_items)
+    for i, (name, desc) in enumerate(existing_items):
+        is_last = (i == count - 1)
+        prefix = "└── " if is_last else "├── "
+        
+        line = f"{prefix}{name}"
+        if desc:
+            # Align comments to a specific column (e.g., 22 characters)
+            line = f"{line:<22}# {desc}"
             
-    return "## Repository Structure\n\n```text\n" + tree_str + "```"
+        tree_lines.append(line)
+            
+    return "## Repository Structure\n\n```text\n" + "\n".join(tree_lines) + "\n```"
 
 def generate_usage_section():
     """Generates the standard Usage section."""
