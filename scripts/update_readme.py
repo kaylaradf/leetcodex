@@ -30,11 +30,18 @@ def parse_solution_file(filename):
 
     with open(os.path.join('solutions', filename), 'r', encoding='utf-8') as f:
         for line in f:
+            line_stripped = line.strip()
+            if not line_stripped:
+                continue # Skip empty lines
+
             if line.startswith('# Difficulty:'):
                 metadata['difficulty'] = line.split(':', 1)[1].strip()
             elif line.startswith('# Category:'):
                 metadata['category'] = line.split(':', 1)[1].strip()
-            elif not line.startswith('#'):
+            elif line.startswith('#'):
+                continue # Skip other comments
+            else:
+                # Stop parsing when we hit non-comment, non-empty code
                 break
     return metadata
 
