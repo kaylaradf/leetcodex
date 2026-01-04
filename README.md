@@ -1,6 +1,7 @@
+![Language](https://img.shields.io/badge/Language-Python-orange.svg?logo=Python&logoColor=yellow) ![Update](https://img.shields.io/badge/Update-Daily-green.svg) ![Progress](https://img.shields.io/badge/progress-1%2F1049-brightgreen.svg)
 # Letkod
 
-karena sdg liburan dan gabut serta habis viral lalu dihujat (ngapain coba.) maka lahirlah ini
+karena sdg liburan dan gabut serta habis viral lalu dihujat (ngapain coba.) maka lahirlah ini.
 
 ## Index
 
