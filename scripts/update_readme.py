@@ -139,6 +139,15 @@ def main():
     intro_match = re.search(r'(^[\s\S]*?)(?=## Index)', content, re.MULTILINE)
     intro = intro_match.group(1) if intro_match else "# Letkod\n\n"
 
+    # Update Progress Badge in Intro
+    # Pattern: ![Progress](https://img.shields.io/badge/progress-<current>%2F<total>-brightgreen.svg)
+    solved_count = len(solutions_metadata)
+    intro = re.sub(
+        r'!\[Progress\]\(https://img\.shields\.io/badge/progress-.*?%2F(\d+)-brightgreen\.svg\)',
+        f'![Progress](https://img.shields.io/badge/progress-{solved_count}%2F\\1-brightgreen.svg)',
+        intro
+    )
+
     # Project Structure: From "## Project Structure" until "## Usage"
     proj_struct_match = re.search(r'(## Project Structure[\s\S]*?)(?=## Usage)', content, re.MULTILINE)
     if proj_struct_match:
