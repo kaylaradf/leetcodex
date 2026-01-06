@@ -1,4 +1,4 @@
-![Language](https://img.shields.io/badge/Language-Python-orange.svg?logo=Python&logoColor=yellow) ![Update](https://img.shields.io/badge/Update-Daily-green.svg) ![Progress](https://img.shields.io/badge/progress-2%2F1049-brightgreen.svg)
+![Language](https://img.shields.io/badge/Language-Python-orange.svg?logo=Python&logoColor=yellow) ![Update](https://img.shields.io/badge/Update-Daily-green.svg) ![Progress](https://img.shields.io/badge/progress-3%2F1049-brightgreen.svg)
 # Letkod
 
 karena sdg liburan dan gabut serta habis viral lalu dihujat (ngapain coba) maka lahirlah ini.
@@ -9,6 +9,7 @@ karena sdg liburan dan gabut serta habis viral lalu dihujat (ngapain coba) maka 
 |---|---|---|---|---|
 | 1 | Two Sum | Easy | Array, Hash Table | [Python](./solutions/1.two-sum.py) |
 | 2 | Add Two Numbers | Medium | Linked List, Math | [Python](./solutions/2.add-two-numbers.py) |
+| 3 | Longest Substring Without Repeating Characters | Medium | Hash Table, String, Sliding Window | [Python](./solutions/3.longest-substring-without-repeating-characters.py) |
 
 ## Repository Structure
 
