@@ -32,7 +32,6 @@ class Solution(object):
         start = 0
 
         for end in range(len(s)):
-            # If the character is already in the map and within the current window
             if s[end] in char_map and char_map[s[end]] >= start:
                 start = char_map[s[end]] + 1
             
