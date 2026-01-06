@@ -18,5 +18,7 @@ Thumbs.db
 # Gemini specific ignores
 .geminiignore
 
+#sawit here
+
 # Test output
 /target/
