@@ -16,11 +16,11 @@
 
 class Solution(object):
     def twoSum(self, nums, target):
-        mapping = {}
+        mep = {}
 
         for index, val in enumerate(nums):
             diff = target - val
-            if diff in mapping:
-                return [index, mapping[diff]]
+            if diff in mep:
+                return [index, mep[diff]]
             else:
-                mapping[val] = index
+                mep[val] = index
