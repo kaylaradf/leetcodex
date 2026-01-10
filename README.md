@@ -1,4 +1,4 @@
-![Language](https://img.shields.io/badge/Language-Python-orange.svg?logo=Python&logoColor=yellow) ![Update](https://img.shields.io/badge/Update-Daily-green.svg) ![Progress](https://img.shields.io/badge/progress-5%2F1049-brightgreen.svg)
+![Language](https://img.shields.io/badge/Language-Python-orange.svg?logo=Python&logoColor=yellow) ![Update](https://img.shields.io/badge/Update-Daily-green.svg) ![Progress](https://img.shields.io/badge/progress-6%2F1049-brightgreen.svg)
 # Letkod
 
 karena sdg liburan dan gabut serta habis viral lalu dihujat (ngapain coba) maka lahirlah ini.
@@ -12,6 +12,7 @@ karena sdg liburan dan gabut serta habis viral lalu dihujat (ngapain coba) maka 
 | 3 | Longest Substring Without Repeating Characters | Medium | Hash Table, String, Sliding Window | [Python](./solutions/3.longest-substring-without-repeating-characters.py) |
 | 4 | Median Of Two Sorted Arrays | Hard | Array, Binary Search, Divide and Conquer | [Python](./solutions/4.median-of-two-sorted-arrays.py) |
 | 5 | Longest Palindromic Substring | Medium | String, Dynamic Programming | [Python](./solutions/5.longest-palindromic-substring.py) |
+| 6 | Zigzag Conversion | Medium | String | [Python](./solutions/6.zigzag-conversion.py) |
 
 ## Repository Structure
 
