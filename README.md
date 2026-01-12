@@ -1,4 +1,4 @@
-![Language](https://img.shields.io/badge/Language-Python-orange.svg?logo=Python&logoColor=yellow) ![Update](https://img.shields.io/badge/Update-Daily-green.svg) ![Progress](https://img.shields.io/badge/progress-8%2F1049-brightgreen.svg)
+![Language](https://img.shields.io/badge/Language-Python-orange.svg?logo=Python&logoColor=yellow) ![Update](https://img.shields.io/badge/Update-Daily-green.svg) ![Progress](https://img.shields.io/badge/progress-9%2F1049-brightgreen.svg)
 # Letkod
 
 karena sdg liburan dan gabut serta habis viral lalu dihujat (ngapain coba) maka lahirlah ini.
@@ -15,6 +15,7 @@ karena sdg liburan dan gabut serta habis viral lalu dihujat (ngapain coba) maka 
 | 6 | Zigzag Conversion | Medium | String | [Python](./solutions/6.zigzag-conversion.py) |
 | 7 | Reverse Integer | Medium | Math | [Python](./solutions/7.reverse-integer.py) |
 | 8 | String to Integer (atoi) | Medium | String | [Python](./solutions/8.string-to-integer-atoi.py) |
+| 9 | Palindrome Number | Easy | Math | [Python](./solutions/9.palindrome-number.py) |
 
 ## Repository Structure
 
