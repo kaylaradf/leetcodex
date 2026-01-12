@@ -48,21 +48,27 @@ def parse_solution_file(filename):
     
     return metadata
 
-def generate_problem_index(solutions_metadata):
-    """Generates the Markdown table for the problem index."""
-    header = "## Index\n\n"
+def generate_markdown_table(solutions_metadata):
+    """Generates a Markdown table for the given solutions."""
     table_header = """| # | Title | Difficulty | Topics | Solution |
 |---|---|---|---|---|
 """
-    
     table_rows = []
     for meta in solutions_metadata:
         solution_path = f"./solutions/{meta['filename']}"
-        # Use the 'topics' key for the table.
         row = f"| {meta['no']} | {meta['title']} | {meta['difficulty']} | {meta['topics']} | [Python]({solution_path}) |"
         table_rows.append(row)
     
-    return header + table_header + "\n".join(table_rows)
+    return table_header + "\n".join(table_rows)
+
+def update_index_md(solutions_metadata):
+    """Generates the full INDEX.md file."""
+    header = "# LeetCode Solution Index\n\nFull list of all solved problems.\n\n"
+    table = generate_markdown_table(solutions_metadata)
+    
+    content = header + table
+    with open('INDEX.md', 'w', encoding='utf-8') as f:
+        f.write(content)
 
 def generate_tree_diagram():
     """Generates a directory tree diagram with annotations, similar to leetcode-rs."""
@@ -70,7 +76,8 @@ def generate_tree_diagram():
         ('solutions', 'Python solutions (source of truth)', True),
         ('scripts',   'Automation scripts', True),
         ('.gitignore', None, False),
-        ('README.md',  None, False)
+        ('README.md',  None, False),
+        ('INDEX.md',   'Full solution index', False)
     ]
     tree_lines = ["letkod/"]
     existing_items = []
@@ -92,7 +99,7 @@ def generate_usage_section():
     return "## Usage\n\n1.  **Clone the repository:**\n    ```bash\n    git clone https://github.com/kaylaradf/letkod.git\n    cd letkod\n    ```\n2.  **Navigate to a solution:**\n    ```bash\n    cd solutions\n    ```\n3.  **Run a solution (example):**\n    ```bash\n    python 1.two-sum.py\n    ```\n"
 
 def main():
-    print("Starting README update process...")
+    print("Starting update process...")
     solution_files = get_solution_files()
     solutions_metadata = []
     for filename in solution_files:
@@ -100,34 +107,62 @@ def main():
         if meta:
             solutions_metadata.append(meta)
     solutions_metadata.sort(key=lambda x: x['no'])
-    new_index = generate_problem_index(solutions_metadata)
+
+    # 1. Update INDEX.md (Full List)
+    update_index_md(solutions_metadata)
+    print("INDEX.md has been updated.")
+
+    # 2. Update README.md (Latest 10 + Link)
+    latest_solutions = solutions_metadata[-10:] # Get last 10
+    
+    # Reverse to show newest on top for the "Latest" section
+    latest_solutions_reversed = latest_solutions[::-1] 
+    
+    latest_table = generate_markdown_table(latest_solutions_reversed)
+    
+    index_section = f"""## Latest Solutions
+
+| [**View Full Index**](./INDEX.md) |
+| :---: |
+
+{latest_table}
+"""
+
     new_tree = generate_tree_diagram()
     new_usage = generate_usage_section()
+
     try:
         with open('README.md', 'r', encoding='utf-8') as f:
             content = f.read()
     except FileNotFoundError:
         content = "# Letkod\n\n"
-    intro_match = re.search(r'(^[​‌‍‎‏﻿\]*?)(?=## Index)', content, re.MULTILINE)
+        
+    # Regex to capture Intro
+    intro_match = re.search(r'(^[​‌‍‎‏﻿\]*?)(?=## Latest Solutions|## Index)', content, re.MULTILINE)
     intro = intro_match.group(1) if intro_match else "# Letkod\n\n"
+
     solved_count = len(solutions_metadata)
     intro = re.sub(
         r'!\\[Progress\\]\(https://img\.shields\.io/badge/progress-.*?%2F(\d+)-brightgreen\.svg\)',
         f'!\\[Progress\\]\(https://img.shields.io/badge/progress-{solved_count}%2F\\1-brightgreen.svg)',
         intro
     )
+
     proj_struct_match = re.search(r'(## Project Structure[\s\S]*?)(?=## Usage)', content, re.MULTILINE)
     if proj_struct_match:
         project_structure = proj_struct_match.group(1)
     else:
         project_structure = "## Project Structure\n\n"
+        
     notes_match = re.search(r'(## Notes[\s\S]*$)', content, re.MULTILINE)
     notes = notes_match.group(1) if notes_match else "## Notes\n\n"
-    final_content = f"{intro}{new_index}\n\n{new_tree}\n\n{project_structure}\n\n{new_usage}\n\n{notes}"
+
+    final_content = f"{intro}{index_section}\n\n{new_tree}\n\n{project_structure}\n\n{new_usage}\n\n{notes}"
     final_content = re.sub(r'\n{3,}', '\n\n', final_content)
+
     with open('README.md', 'w', encoding='utf-8') as f:
         f.write(final_content)
-    print("README.md has been successfully updated while preserving your edits.")
+    print("README.md has been updated.")
 
 if __name__ == '__main__':
     main()
